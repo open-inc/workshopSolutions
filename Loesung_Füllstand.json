@@ -1,0 +1,161 @@
+[
+    {
+        "id": "2c06491d.7be6a6",
+        "type": "tab",
+        "label": "Füllstand_Lösung",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e5d44061.74363",
+        "type": "od-converter-nodered",
+        "z": "2c06491d.7be6a6",
+        "dimCount": 1,
+        "x": 503.5,
+        "y": 129,
+        "wires": [
+            [
+                "921daf12.79fc1"
+            ]
+        ]
+    },
+    {
+        "id": "bfc6dac8.bca7a8",
+        "type": "grovepi-ultrasonic",
+        "z": "2c06491d.7be6a6",
+        "name": "Füllstand",
+        "mode": "timer",
+        "interval": 1,
+        "unit": "s",
+        "pin": "8",
+        "sensorname": "Ultrasonic Ranger",
+        "sensorid": "grovepi.ultrasonic-ranger.1",
+        "x": 121.5,
+        "y": 97,
+        "wires": [
+            [
+                "18aed634.b1376a",
+                "e5d44061.74363",
+                "e8032a25.214d78",
+                "c7a086e5.d3b828"
+            ]
+        ]
+    },
+    {
+        "id": "18aed634.b1376a",
+        "type": "grovepi-datapoint-lcd",
+        "z": "2c06491d.7be6a6",
+        "name": "",
+        "pin": "1",
+        "x": 465.5,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "921daf12.79fc1",
+        "type": "debug",
+        "z": "2c06491d.7be6a6",
+        "name": "Daten für Server",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 204,
+        "wires": []
+    },
+    {
+        "id": "e8032a25.214d78",
+        "type": "debug",
+        "z": "2c06491d.7be6a6",
+        "name": "Daten aus Sensor",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 467.5,
+        "y": 202,
+        "wires": []
+    },
+    {
+        "id": "5cbcca5.2c1a034",
+        "type": "e-mail",
+        "z": "2c06491d.7be6a6",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "martin.stein@uni-siegen.de",
+        "dname": "E-Mai",
+        "x": 992.5,
+        "y": 29,
+        "wires": []
+    },
+    {
+        "id": "c7a086e5.d3b828",
+        "type": "switch",
+        "z": "2c06491d.7be6a6",
+        "name": "Ist Voll?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "3",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 443.5,
+        "y": 81,
+        "wires": [
+            [
+                "14f19728.e23e59"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ab7b664c.359998",
+        "type": "debug",
+        "z": "2c06491d.7be6a6",
+        "name": "Neuen  Behälter anfordern!",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1059.5,
+        "y": 81,
+        "wires": []
+    },
+    {
+        "id": "14f19728.e23e59",
+        "type": "function",
+        "z": "2c06491d.7be6a6",
+        "name": "Statusmeldung",
+        "func": "msg.payload= \"Der Behälter ist voll (Restkapazit: \"+ msg.payload+\")\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 767.5,
+        "y": 88,
+        "wires": [
+            [
+                "ab7b664c.359998",
+                "5cbcca5.2c1a034"
+            ]
+        ]
+    }
+]

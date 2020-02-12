@@ -1,0 +1,145 @@
+[
+    {
+        "id": "f7339a62.920228",
+        "type": "tab",
+        "label": "Wetterstation_Lösung",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "33e15a68.ec9dd6",
+        "type": "grovepi-dht11",
+        "z": "f7339a62.920228",
+        "name": "",
+        "interval": 1,
+        "unit": "s",
+        "pin": "2",
+        "sensorname": "DHT11",
+        "sensorid": "dht11.1",
+        "x": 135,
+        "y": 86,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "64d71db2.329804",
+        "type": "grovepi-datapoint-lcd",
+        "z": "f7339a62.920228",
+        "name": "",
+        "pin": "1",
+        "x": 484.5,
+        "y": 4227,
+        "wires": []
+    },
+    {
+        "id": "b06fa8d.29e7f58",
+        "type": "grovepi-dht11",
+        "z": "f7339a62.920228",
+        "name": "",
+        "interval": "5",
+        "unit": "s",
+        "pin": "2",
+        "sensorname": "DHT11",
+        "sensorid": "dht11.1",
+        "x": 170.5,
+        "y": 4227,
+        "wires": [
+            [
+                "64d71db2.329804",
+                "9f1e68e8.be8248",
+                "469e4fb1.d3cb6"
+            ]
+        ]
+    },
+    {
+        "id": "d61f3a96.e476e8",
+        "type": "mqtt out",
+        "z": "f7339a62.920228",
+        "name": "Senden an Server",
+        "topic": "cloud-out/#",
+        "qos": "2",
+        "retain": "",
+        "broker": "bb1091b5.11109",
+        "x": 1019,
+        "y": 4291,
+        "wires": []
+    },
+    {
+        "id": "9f1e68e8.be8248",
+        "type": "od-converter-nodered",
+        "z": "f7339a62.920228",
+        "sensorid": "",
+        "dimCount": 1,
+        "name": "",
+        "owner": "workshop_demo",
+        "valueTypes": [
+            {
+                "name": "",
+                "unit": "",
+                "type": "String"
+            }
+        ],
+        "sensorname": "",
+        "x": 523.5,
+        "y": 4294,
+        "wires": [
+            [
+                "5cc35e15.4d24e",
+                "d61f3a96.e476e8"
+            ]
+        ]
+    },
+    {
+        "id": "469e4fb1.d3cb6",
+        "type": "debug",
+        "z": "f7339a62.920228",
+        "name": "Daten aus Sensor",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 491.5,
+        "y": 4364,
+        "wires": []
+    },
+    {
+        "id": "5cc35e15.4d24e",
+        "type": "debug",
+        "z": "f7339a62.920228",
+        "name": "Daten für Server",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 799.5,
+        "y": 4364,
+        "wires": []
+    },
+    {
+        "id": "bb1091b5.11109",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "Kompetenzzentrum-Siegen",
+        "broker": "kompetenzzentrum-siegen.digital",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

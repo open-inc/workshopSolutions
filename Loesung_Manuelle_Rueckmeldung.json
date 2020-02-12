@@ -1,0 +1,193 @@
+[
+    {
+        "id": "43215284.05726c",
+        "type": "tab",
+        "label": "Manuelle Rückmeldung",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a89b75c2.109738",
+        "type": "debug",
+        "z": "43215284.05726c",
+        "name": "Daten für Server",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1161,
+        "y": 154,
+        "wires": []
+    },
+    {
+        "id": "5ced27fe.c44678",
+        "type": "debug",
+        "z": "43215284.05726c",
+        "name": "Daten aus Sensor",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 255.5,
+        "y": 232,
+        "wires": []
+    },
+    {
+        "id": "b0f84889.6bc8e8",
+        "type": "od-converter-nodered",
+        "z": "43215284.05726c",
+        "sensorid": "",
+        "dimCount": 1,
+        "name": "",
+        "owner": "",
+        "valueTypes": [
+            {
+                "name": "Bewegung",
+                "unit": "",
+                "type": "Boolean"
+            }
+        ],
+        "sensorname": "",
+        "x": 894.5,
+        "y": 152,
+        "wires": [
+            [
+                "a89b75c2.109738"
+            ]
+        ]
+    },
+    {
+        "id": "58e7fd6a.8ce074",
+        "type": "grovepi-datapoint-lcd",
+        "z": "43215284.05726c",
+        "name": "",
+        "pin": "1",
+        "x": 255.5,
+        "y": 91,
+        "wires": []
+    },
+    {
+        "id": "b77044bf.279a38",
+        "type": "function",
+        "z": "43215284.05726c",
+        "name": "JA",
+        "func": "delete msg.valueTypes;\nmsg.payload=true;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 659,
+        "y": 148,
+        "wires": [
+            [
+                "b0f84889.6bc8e8",
+                "85bc85fc.2a9498"
+            ]
+        ]
+    },
+    {
+        "id": "23096b9a.1a41e4",
+        "type": "switch",
+        "z": "43215284.05726c",
+        "name": "Knopf betätigt",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "neq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 500,
+        "y": 153,
+        "wires": [
+            [
+                "b77044bf.279a38"
+            ],
+            [
+                "fad7abf6.c0e938"
+            ]
+        ]
+    },
+    {
+        "id": "85bc85fc.2a9498",
+        "type": "debug",
+        "z": "43215284.05726c",
+        "name": "Antwort",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 838,
+        "y": 254,
+        "wires": []
+    },
+    {
+        "id": "2a4a035d.eb6ccc",
+        "type": "grovepi-button",
+        "z": "43215284.05726c",
+        "name": "",
+        "mode": "timer",
+        "interval": "0.1",
+        "unit": "s",
+        "pin": "7",
+        "sensorname": "Button",
+        "sensorid": "grovepi.button.1",
+        "x": 63.5,
+        "y": 145,
+        "wires": [
+            [
+                "e08fefaa.66d29",
+                "5ced27fe.c44678",
+                "58e7fd6a.8ce074"
+            ]
+        ]
+    },
+    {
+        "id": "e08fefaa.66d29",
+        "type": "rbe",
+        "z": "43215284.05726c",
+        "name": "Nur einmal senden",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 290.5,
+        "y": 153,
+        "wires": [
+            [
+                "23096b9a.1a41e4"
+            ]
+        ]
+    },
+    {
+        "id": "fad7abf6.c0e938",
+        "type": "function",
+        "z": "43215284.05726c",
+        "name": "NEIN",
+        "func": "delete msg.valueTypes;\nmsg.payload=false;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 658,
+        "y": 195,
+        "wires": [
+            [
+                "b0f84889.6bc8e8"
+            ]
+        ]
+    }
+]
